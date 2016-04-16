@@ -15,7 +15,8 @@ import common.MapTile;
 import common.ScanMap;
 import enums.Terrain;
 public class ROVER_16 {
-// comment by Prasanth
+// comment by Prasanth Kannan
+	//check
 	BufferedReader in;
 	PrintWriter out;
 	String rovername;
