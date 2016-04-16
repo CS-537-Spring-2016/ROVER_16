@@ -16,7 +16,7 @@ import common.ScanMap;
 import enums.Terrain;
 public class ROVER_16 {
 // comment by Prasanth Kannan
-	//check
+	//check for branch
 	BufferedReader in;
 	PrintWriter out;
 	String rovername;
