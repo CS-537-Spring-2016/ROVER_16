@@ -15,7 +15,7 @@ import common.MapTile;
 import common.ScanMap;
 import enums.Terrain;
 public class ROVER_16 {
-
+	//by Yiten Wang(Evan)
 	BufferedReader in;
 	PrintWriter out;
 	String rovername;
@@ -25,6 +25,7 @@ public class ROVER_16 {
 	static final int PORT_ADDRESS = 9537;
 
 	public ROVER_16() {
+		//by Yiten Wang(Evan)
 		// constructor
 		System.out.println("ROVER_16 rover object constructed");
 		rovername = "ROVER_16";
