@@ -238,8 +238,9 @@ public class SwarmServer {
                     	}
                     	              
                     	// make modified scienceLocations based on scanner tools available
- 
+                    	
                     	// because I don't want to accidentally change the original
+                    	//Only radio active tool is available for rover_16. So other tools are removed.
                     	HashMap<Coord, Science> sciHash = scienceLocations.getHashMapClone();
                     	
                     	HashMap<Coord, Science> filteredScienceLocations = new HashMap<Coord, Science>();
@@ -248,12 +249,13 @@ public class SwarmServer {
                     	if(rover.getTool_1() == RoverToolType.RADIATION_SENSOR || rover.getTool_2() == RoverToolType.RADIATION_SENSOR){
 	                	    for (Entry<Coord, Science> entry : sciHash.entrySet()) {
 	                	        if (Objects.equals(Science.RADIOACTIVE, entry.getValue())) {
+	                	        	System.out.println("Radio active science detected");
 	                	        	filteredScienceLocations.put(entry.getKey(), Science.RADIOACTIVE);
 	                	        }
 	                	    }
                     	}
                     	
-                    	if(rover.getTool_1() == RoverToolType.CHEMICAL_SENSOR || rover.getTool_2() == RoverToolType.CHEMICAL_SENSOR){
+                    	/*if(rover.getTool_1() == RoverToolType.CHEMICAL_SENSOR || rover.getTool_2() == RoverToolType.CHEMICAL_SENSOR){
 	                	    for (Entry<Coord, Science> entry : sciHash.entrySet()) {
 	                	        if (Objects.equals(Science.ORGANIC, entry.getValue())) {
 	                	        	filteredScienceLocations.put(entry.getKey(), Science.ORGANIC);
@@ -275,7 +277,7 @@ public class SwarmServer {
 	                	        	filteredScienceLocations.put(entry.getKey(), Science.MINERAL);
 	                	        }
 	                	    }
-                    	}
+                    	}*/
                     	
                     	
                     	ScanMap scanMap = planetMap.getScanMap(roverPos, scanRange, roverLocations, new ScienceLocations(filteredScienceLocations));

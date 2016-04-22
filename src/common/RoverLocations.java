@@ -36,7 +36,7 @@ public class RoverLocations {
 		// test rovers
 		roverHash.put(RoverName.ROVER_00, new Coord(4,20));
 		roverHash.put(RoverName.ROVER_99, new Coord(4,7));
-		roverHash.put(RoverName.ROVER_16, new Coord(4,14));
+		roverHash.put(RoverName.ROVER_16, new Coord(25,20));
 	}
 	
 	public synchronized boolean moveRover(RoverName rname, Coord loc){
