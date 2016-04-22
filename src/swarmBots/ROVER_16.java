@@ -1,4 +1,5 @@
 package swarmBots;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +15,18 @@ import common.Coord;
 import common.MapTile;
 import common.ScanMap;
 import enums.Terrain;
+
+
+//Making an addition to this file to check whether a remote alternat push will change it
+
+// rearanged the 2nd and 3rd line in the following comment
+
+/**
+ * The seed that this program is built on is a chat program example found here:
+ * publishing their code examples
+ * * http://cs.lmu.edu/~ray/notes/javanetexamples/ Many thanks to the authors for
+ */
+
 public class ROVER_16 {
 
 	BufferedReader in;
@@ -321,5 +334,4 @@ public class ROVER_16 {
 		ROVER_16 client = new ROVER_16();
 		client.run();
 	}
-
 }
