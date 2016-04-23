@@ -58,8 +58,8 @@ public class SwarmServer {
     static GUIdisplay2 mainPanel;
 	static MyGUIWorker2 myWorker;
     
-	// These are the velocity or speed values for the different drive systems
-	// Changes these as necessary for good simulation balance
+	// These are the velocity or speed values for the different Drive Systems
+	// Changes these as necessary for good simulation Balance
     static final int WHEELS_TIME_PER_SQUARE = 500;
     static final int TREADS_TIME_PER_SQUARE = 1000;
     static final int WALKER_TIME_PER_SQUARE = 1200;
