@@ -169,7 +169,7 @@ public class ROVER_16 {
 					
 				} else {
 					// check scanMap to see if path is blocked to the north
-					// (scanMap may be old data by now)
+					// (scanMap may be old data by Now)
 					System.out.println("ROVER_16 scanMapTiles[2][1].getHasRover() " + scanMapTiles[2][1].getHasRover());
 					System.out.println("ROVER_16 scanMapTiles[2][1].getTerrain() " + scanMapTiles[2][1].getTerrain().toString());
 					
