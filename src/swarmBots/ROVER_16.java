@@ -185,7 +185,8 @@ public class ROVER_16 {
 					System.out.println("ROVER_16 scanMapTiles[2][1].getHasRover() " + scanMapTiles[2][1].getHasRover());
 					System.out.println("ROVER_16 scanMapTiles[2][1].getTerrain() " + scanMapTiles[2][1].getTerrain().toString());
 					
-					if (scanMapTiles[centerIndex][centerIndex -1].getHasRover() 
+					if (scanMapTiles[centerIndex][centerIndex -1].getHasRover()
+							//Avoids sand now and goes oer the rocks
 							|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.SAND
 							|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.NONE) {
 						blocked = true;
