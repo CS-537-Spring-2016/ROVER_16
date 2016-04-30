@@ -277,7 +277,7 @@ public class SwarmServer {
 	                	    }
                     	}
                     	
-                    	if(rover.getTool_1() == RoverToolType.CHEMICAL_SENSOR || rover.getTool_2() == RoverToolType.CHEMICAL_SENSOR){
+                    	/*if(rover.getTool_1() == RoverToolType.CHEMICAL_SENSOR || rover.getTool_2() == RoverToolType.CHEMICAL_SENSOR){
 	                	    for (Entry<Coord, Science> entry : sciHash.entrySet()) {
 	                	        if (Objects.equals(Science.ORGANIC, entry.getValue())) {
 	                	        	filteredScienceLocations.put(entry.getKey(), Science.ORGANIC);
@@ -299,7 +299,7 @@ public class SwarmServer {
 	                	        	filteredScienceLocations.put(entry.getKey(), Science.MINERAL);
 	                	        }
 	                	    }
-                    	}
+                    	}*/
                     	
                     	
                     	ScanMap scanMap = planetMap.getScanMap(roverPos, scanRange, roverLocations, new ScienceLocations(filteredScienceLocations));
