@@ -165,7 +165,14 @@ public class ROVER_16 {
 				MapTile[][] scanMapTiles = scanMap.getScanMap();
 				int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 				// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
-
+				
+				System.out.println("Rover_16:scanMapTiles[centerIndex][centerIndex].getScience().getSciString()"+scanMapTiles[centerIndex][centerIndex].getScience().getSciString());
+				if(!scanMapTiles[centerIndex][centerIndex].getScience().getSciString().equals("N"))
+				{
+					System.out.println("Rover_16 requests GATHER");
+					out.println("GATHER");
+				}
+				
 				if (goingEast) {
 					// check scanMap to see if path is blocked to the south
 					// (scanMap may be old data by now)
