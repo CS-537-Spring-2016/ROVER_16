@@ -169,6 +169,12 @@ public class ROVER_16 {
 				if (goingEast) {
 					// check scanMap to see if path is blocked to the south
 					// (scanMap may be old data by now)
+					System.out.println("ROVER_16: scanMapTiles[centerIndex][centerIndex].getScience().getSciString() " + scanMapTiles[centerIndex][centerIndex].getScience().getSciString());
+					if (!scanMapTiles[centerIndex][centerIndex].getScience().getSciString().equals("N")) {
+						System.out.println("ROVER_16 request GATHER");
+						out.println("GATHER");
+						
+					}
 					if (scanMapTiles[centerIndex][centerIndex +1].getHasRover() 
 							|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.SAND
 							|| scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.NONE) {
