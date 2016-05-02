@@ -1,4 +1,5 @@
 package swarmBots;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,8 +15,20 @@ import common.Coord;
 import common.MapTile;
 import common.ScanMap;
 import enums.Terrain;
+
+
+//Making an addition to this file to check whether a remote alternat push will change it
+
+// rearanged the 2nd and 3rd line in the following comment
+
+/**
+ * The seed that this program is built on is a chat program example found here:
+ * publishing their code examples
+ * * http://cs.lmu.edu/~ray/notes/javanetexamples/ Many thanks to the authors for
+ */
+
 public class ROVER_16 {
-	//by Yiten Wang(Evan)
+
 	BufferedReader in;
 	PrintWriter out;
 	String rovername;
@@ -25,7 +38,6 @@ public class ROVER_16 {
 	static final int PORT_ADDRESS = 9537;
 
 	public ROVER_16() {
-		//by Yiten Wang(Evan)2
 		// constructor
 		System.out.println("ROVER_16 rover object constructed");
 		rovername = "ROVER_16";
@@ -74,7 +86,7 @@ public class ROVER_16 {
 		int counter = 0;
 		
 		boolean goingSouth = false;
-		boolean goingEast = false;
+		boolean goingEast = true;
 		
 		boolean stuck = false; // just means it did not change locations between requests,
 								// could be velocity limit or obstruction etc.
@@ -139,7 +151,7 @@ public class ROVER_16 {
 			if (blocked) {
 				for (int i = 0; i < 5; i++) {
 					out.println("MOVE S");
-					//System.out.println("ROVER_00 request move E");
+					//System.out.println("ROVER_16 request move E");
 					Thread.sleep(1100);
 				}
 				blocked = false;
@@ -157,8 +169,14 @@ public class ROVER_16 {
 				if (goingEast) {
 					// check scanMap to see if path is blocked to the south
 					// (scanMap may be old data by now)
+					System.out.println("ROVER_16: scanMapTiles[centerIndex][centerIndex].getScience().getSciString() " + scanMapTiles[centerIndex][centerIndex].getScience().getSciString());
+					if (!scanMapTiles[centerIndex][centerIndex].getScience().getSciString().equals("N")) {
+						System.out.println("ROVER_16 request GATHER");
+						out.println("GATHER");
+						
+					}
 					if (scanMapTiles[centerIndex][centerIndex +1].getHasRover() 
-							|| scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.ROCK
+							|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.SAND
 							|| scanMapTiles[centerIndex +1][centerIndex].getTerrain() == Terrain.NONE) {
 						blocked = true;
 					} else {
@@ -173,8 +191,9 @@ public class ROVER_16 {
 					System.out.println("ROVER_16 scanMapTiles[2][1].getHasRover() " + scanMapTiles[2][1].getHasRover());
 					System.out.println("ROVER_16 scanMapTiles[2][1].getTerrain() " + scanMapTiles[2][1].getTerrain().toString());
 					
-					if (scanMapTiles[centerIndex][centerIndex -1].getHasRover() 
-							|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.ROCK
+					if (scanMapTiles[centerIndex][centerIndex -1].getHasRover()
+							//Avoids sand now and goes over the rocks
+							|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.SAND
 							|| scanMapTiles[centerIndex -1][centerIndex].getTerrain() == Terrain.NONE) {
 						blocked = true;
 					} else {
@@ -322,5 +341,4 @@ public class ROVER_16 {
 		ROVER_16 client = new ROVER_16();
 		client.run();
 	}
-
 }
