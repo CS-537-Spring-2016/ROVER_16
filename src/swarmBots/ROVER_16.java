@@ -25,7 +25,7 @@ public class ROVER_16 {
 	static final int PORT_ADDRESS = 9537;
 
 	public ROVER_16() {
-		//by Yiten Wang(Evan)
+		//by Yiten Wang(Evan)2
 		// constructor
 		System.out.println("ROVER_16 rover object constructed");
 		rovername = "ROVER_16";
