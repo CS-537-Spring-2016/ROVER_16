@@ -816,8 +816,7 @@ public class SwarmServer {
 		countDownTimer.stop();
 	}
 	
-	// sad face - more hard coded bs
-	private static int getCorpNumber(Rover aRover){
+		private static int getCorpNumber(Rover aRover){
 		int tnum = 0;
 		String roverNumber = aRover.getRoverName().toString().substring(6);
 		// check for Blue Corp - return int 1
