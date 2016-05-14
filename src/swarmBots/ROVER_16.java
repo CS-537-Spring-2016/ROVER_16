@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import common.Coord;
 import common.MapTile;
 import common.ScanMap;
+import common.Communication;
 
 import enums.Science;
 import enums.Terrain;
@@ -15,6 +16,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
+
+import org.json.simple.JSONArray;
 
 
 public class ROVER_16 {
@@ -118,6 +121,11 @@ public class ROVER_16 {
             targetLocation = extractLocationFromString(line);
         }
         System.out.println(rovername + " TARGET_LOC " + targetLocation);
+        
+     // ******** communication server
+     			String url = "http://23.251.155.186:3000/api/global";
+     			Communication com = new Communication(url);
+     			int comm_count = 0;
 
 
         // ******* destination *******
@@ -227,7 +235,7 @@ public class ROVER_16 {
             // upon scan, update my field map
             MapTile[][] scanMapTiles = scanMap.getScanMap();
             updateFieldMap(currentLoc, scanMapTiles);
-
+            int centerIndex = (scanMap.getEdgeSize() - 1)/2;
 
             // ***** MOVING *****
 
@@ -237,6 +245,17 @@ public class ROVER_16 {
 //                destination = destinations.poll();
 //            }
 
+         // ********* post your scanMapTiles to communication server
+			// must be called AFTER doScan() and currentLoc
+			com.postScanMapTiles(currentLoc, scanMapTiles);
+
+			// reduce the number of calling globalmap for optimal traffic
+			if (comm_count % 20 == 0){
+				JSONArray array = com.getGlobalMap();
+				// do something with this global map data
+			}
+			comm_count++;
+            
             // our starting position is xpos=1, ypos=5
             // direction Queue for direction
             List<String> moves = Astar(currentLoc, destination, scanMapTiles);
