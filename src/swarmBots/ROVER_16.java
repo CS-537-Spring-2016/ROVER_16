@@ -580,6 +580,17 @@ public class ROVER_16 {
         return returnList;
     }
 
+    
+    //sweep
+    public void s() {
+        //Gather all the science in the target location
+    	boolean flag = true;
+    	int i = 0;
+    	while(flag) {
+            //every element in the matrix
+    		//add to the arraylist or print the GATHER
+    	}  
+    }
 
     // sends a SCAN request to the server and puts the result in the scanMap array
     public void doScan() throws IOException {
