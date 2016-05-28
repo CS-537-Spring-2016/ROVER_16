@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import common.Communication;
 import common.Coord;
 import common.MapTile;
 import common.ScanMap;
@@ -125,6 +126,12 @@ public class ROVER_16 {
 									// could be velocity limit or obstruction
 									// etc.
 			boolean blocked = false;
+			
+			// ******** communication server
+			String url = "http://192.168.1.104:3000/api";
+			String corp_secret = "0FSj7Pn23t";
+			Communication com = new Communication(url, rovername, corp_secret);
+			int comm_count = 0;
 
 			String[] cardinals = new String[4];
 			cardinals[0] = "N";
