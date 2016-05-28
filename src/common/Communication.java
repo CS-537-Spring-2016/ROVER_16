@@ -104,7 +104,7 @@ public class Communication {
         }
         return tiles;
     }
-
+    
     // for requesting global map
     public JSONArray getGlobalMap() {
 
