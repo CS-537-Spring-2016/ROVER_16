@@ -1,60 +1,57 @@
 package swarmBots;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import common.Coord;
-import common.MapTile;
-import common.ScanMap;
-import common.Communication;
-
-import enums.Science;
-import enums.Terrain;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.json.simple.JSONArray;
+import javax.print.attribute.standard.Destination;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import common.Coord;
+import common.MapTile;
+import common.ScanMap;
+import enums.Terrain;
+
+/**
+ * The seed that this program is built on is a chat program example found here:
+ * http://cs.lmu.edu/~ray/notes/javanetexamples/ Many thanks to the authors for
+ * publishing their code examples
+ */
 
 public class ROVER_16 {
-
-	//comment by vidushi
-	//check
-
-// comment by Prasanth Kannan
-	//check for branch
 
 	BufferedReader in;
 	PrintWriter out;
 	String rovername;
 	ScanMap scanMap;
 	int sleepTime;
-	//String SERVER_ADDRESS = "192.168.1.106";
 	String SERVER_ADDRESS = "localhost";
 	static final int PORT_ADDRESS = 9537;
-	Map<Coord, MapTile> fieldMap;
 
 	public ROVER_16() {
 		// constructor
+		System.out.println("ROVER_16 rover object constructed");
 		rovername = "ROVER_16";
-		System.out.println(rovername + " rover object constructed");
-		//SERVER_ADDRESS = "192.168.1.106";
 		SERVER_ADDRESS = "localhost";
 		// this should be a safe but slow timer value
-		sleepTime = 300; // in milliseconds - smaller is faster, but the server
+		sleepTime = 120; // in milliseconds - smaller is faster, but the server
 							// will cut connection if it is too small
-		fieldMap = new HashMap<>();
 	}
 
 	public ROVER_16(String serverAddress) {
 		// constructor
-		System.out.println(rovername + " rover object constructed");
+		System.out.println("ROVER_16 rover object constructed");
 		rovername = "ROVER_16";
 		SERVER_ADDRESS = serverAddress;
-		sleepTime = 200; // in milliseconds - smaller is faster, but the server
+		sleepTime = 120; // in milliseconds - smaller is faster, but the server
 							// will cut connection if it is too small
 	}
 
@@ -123,13 +120,6 @@ public class ROVER_16 {
 			}
 			System.out.println(rovername + " TARGET_LOC " + targetLocation);
 
-			// ******** communication server
-			String url = "http://192.168.1.104:3000/api";
-			String corp_secret = "0FSj7Pn23t";
-			Communication com = new Communication(url, rovername, corp_secret);
-			int comm_count = 0;
-
-			boolean goingSouth = true;
 			boolean stuck = false; // just means it did not change locations
 									// between requests,
 									// could be velocity limit or obstruction
@@ -145,6 +135,7 @@ public class ROVER_16 {
 			String currentDir = cardinals[0];
 			Coord currentLoc = null;
 			Coord previousLoc = null;
+			Coord destination = null;
 
 			/**
 			 * #### Rover controller process loop ####
@@ -168,7 +159,6 @@ public class ROVER_16 {
 				// after getting location set previous equal current to be able
 				// to check for stuckness and blocked later
 				previousLoc = currentLoc;
-
 				// ***** do a SCAN *****
 
 				// gets the scanMap from the server based on the Rover current
@@ -177,87 +167,17 @@ public class ROVER_16 {
 				// prints the scanMap to the Console output for debug purposes
 				scanMap.debugPrintMap();
 
-				// ***** get TIMER remaining *****
-				out.println("TIMER");
-				line = in.readLine();
-				if (line == null) {
-					System.out.println(rovername + " check connection to server");
-					line = "";
-				}
-				if (line.startsWith("TIMER")) {
-					String timeRemaining = line.substring(6);
-					System.out.println(rovername + " timeRemaining: " + timeRemaining);
-				}
-
 				// ***** MOVING *****
-				// try moving east 5 block if blocked
-				if (blocked) {
-					
-					
-					
-					for (int i = 0; i < 5; i++) {
-						out.println("MOVE E");
-						// System.out.println("ROVER_16 request move E");
-						Thread.sleep(300);
-					}
-					
-					
-					
-					blocked = false;
-					// reverses direction after being blocked
-					goingSouth = !goingSouth;
-				} else {
 
-					// pull the MapTile array out of the ScanMap object
-					MapTile[][] scanMapTiles = scanMap.getScanMap();
-					int centerIndex = (scanMap.getEdgeSize() - 1) / 2;
-					// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
-					
-					// ********* post your scanMapTiles to communication server
-					// must be called AFTER doScan() and currentLoc
-					com.postScanMapTiles(currentLoc, scanMapTiles);
+				if (stuck) {
+						//Code for motion of the Rover.
+				}
+				
+				
 
-					// reduce the number of calling globalmap for optimal
-					// traffic
-					if (comm_count % 20 == 0) {
-						JSONArray array = com.getGlobalMap();
-						// do something with this global map data
-					}
-					comm_count++;
-
-					if (goingSouth) {
-						// check scanMap to see if path is blocked to the south
-						// (scanMap may be old data by now)
-						if (scanMapTiles[centerIndex][centerIndex + 1].getHasRover()
-								|| scanMapTiles[centerIndex][centerIndex + 1].getTerrain() == Terrain.SAND
-								|| scanMapTiles[centerIndex][centerIndex + 1].getTerrain() == Terrain.NONE) {
-							blocked = true;
-						} else {
-							// request to server to move
-							out.println("MOVE S");
-							// System.out.println("ROVER_16 request move S");
-						}
-
-					} else {
-						// check scanMap to see if path is blocked to the north
-						// (scanMap may be old data by now)
-						// System.out.println("ROVER_16
-						// scanMapTiles[2][1].getHasRover() " +
-						// scanMapTiles[2][1].getHasRover());
-						// System.out.println("ROVER_16
-						// scanMapTiles[2][1].getTerrain() " +
-						// scanMapTiles[2][1].getTerrain().toString());
-
-						if (scanMapTiles[centerIndex][centerIndex - 1].getHasRover()
-								|| scanMapTiles[centerIndex][centerIndex - 1].getTerrain() == Terrain.SAND
-								|| scanMapTiles[centerIndex][centerIndex - 1].getTerrain() == Terrain.NONE) {
-							blocked = true;
-						} else {
-							// request to server to move
-							out.println("MOVE N");
-							// System.out.println("ROVER_16 request move N");
-						}
-					}
+				if (currentLoc.xpos == destination.xpos && currentLoc.ypos == destination.ypos) {
+					// Code to extract the minerals.
+					out.println("GATHER");
 				}
 
 				// another call for current location
@@ -269,7 +189,6 @@ public class ROVER_16 {
 				}
 				if (line.startsWith("LOC")) {
 					currentLoc = extractLocationFromString(line);
-
 				}
 
 				// test for stuckness
@@ -416,17 +335,7 @@ public class ROVER_16 {
 	 * Runs the client
 	 */
 	public static void main(String[] args) throws Exception {
-		ROVER_16 client;
-		// if a command line argument is included it is used as the map filename
-		// if present uses an IP address instead of localhost
-
-		if (!(args.length == 0)) {
-			client = new ROVER_16(args[0]);
-		} else {
-			client = new ROVER_16();
-		}
-
+		ROVER_16 client = new ROVER_16();
 		client.run();
 	}
-
 }
