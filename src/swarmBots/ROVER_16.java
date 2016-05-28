@@ -4,22 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.print.attribute.standard.Destination;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import common.Communication;
 import common.Coord;
 import common.MapTile;
 import common.ScanMap;
-import enums.Terrain;
 
 /**
  * The seed that this program is built on is a chat program example found here:
@@ -176,7 +169,6 @@ public class ROVER_16 {
 				scanMap.debugPrintMap();
 
 				// ***** MOVING *****
-
 				destination = new Coord(34, 5);
 				
 				if (stuck) {
@@ -184,22 +176,18 @@ public class ROVER_16 {
 					out.println("MOVE N");
 				}
 				
+				//For communication with the server.
+				// pull the MapTile array out of the ScanMap object
+				MapTile[][] scanMapTiles = scanMap.getScanMap();
+				int centerIndex = (scanMap.getEdgeSize() - 1)/2;
+				// tile S = y + 1; N = y - 1; E = x + 1; W = x - 1
 				
+				com.postScanMapTiles(currentLoc, scanMapTiles);
 
+				//If the current position is the destination position.
 				if (currentLoc.xpos == destination.xpos && currentLoc.ypos == destination.ypos) {
 					// Code to extract the minerals.
 					out.println("GATHER");
-				}
-
-				// another call for current location
-				out.println("LOC");
-				line = in.readLine();
-				if (line == null) {
-					System.out.println("ROVER_16 check connection to server");
-					line = "";
-				}
-				if (line.startsWith("LOC")) {
-					currentLoc = extractLocationFromString(line);
 				}
 
 				// test for stuckness
