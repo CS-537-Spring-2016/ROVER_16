@@ -16,8 +16,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
 
-import common.Communication;
-
 
 public class ROVER_16 {
 
