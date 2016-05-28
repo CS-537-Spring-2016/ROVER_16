@@ -35,13 +35,14 @@ public class ROVER_16 {
 	ScanMap scanMap;
 	int sleepTime;
 	String SERVER_ADDRESS = "localhost";
+	String commIP = "23.251.155.186";
 	static final int PORT_ADDRESS = 9537;
 
 	public ROVER_16() {
 		// constructor
 		System.out.println("ROVER_16 rover object constructed");
 		rovername = "ROVER_16";
-		SERVER_ADDRESS = "localhost";
+		//SERVER_ADDRESS = "localhost";
 		// this should be a safe but slow timer value
 		sleepTime = 120; // in milliseconds - smaller is faster, but the server
 							// will cut connection if it is too small
@@ -128,7 +129,7 @@ public class ROVER_16 {
 			boolean blocked = false;
 			
 			// ******** communication server
-			String url = "http://192.168.1.104:3000/api";
+			String url = "http://"+commIP+":3000/api";
 			String corp_secret = "0FSj7Pn23t";
 			Communication com = new Communication(url, rovername, corp_secret);
 			int comm_count = 0;
