@@ -33,7 +33,7 @@ public class ROVER_16 {
 	PrintWriter out;
 	String rovername;
 	ScanMap scanMap;
-	int sleepTime;
+	int sleepTime = 120;
 	String SERVER_ADDRESS = "localhost";
 	String commIP = "23.251.155.186";
 	static final int PORT_ADDRESS = 9537;
@@ -44,7 +44,7 @@ public class ROVER_16 {
 		rovername = "ROVER_16";
 		//SERVER_ADDRESS = "localhost";
 		// this should be a safe but slow timer value
-		sleepTime = 120; // in milliseconds - smaller is faster, but the server
+		//sleepTime = 120; // in milliseconds - smaller is faster, but the server
 							// will cut connection if it is too small
 	}
 
@@ -53,7 +53,7 @@ public class ROVER_16 {
 		System.out.println("ROVER_16 rover object constructed");
 		rovername = "ROVER_16";
 		SERVER_ADDRESS = serverAddress;
-		sleepTime = 120; // in milliseconds - smaller is faster, but the server
+		//sleepTime = 120; // in milliseconds - smaller is faster, but the server
 							// will cut connection if it is too small
 	}
 
@@ -177,8 +177,11 @@ public class ROVER_16 {
 
 				// ***** MOVING *****
 
+				destination = new Coord(34, 5);
+				
 				if (stuck) {
 						//Code for motion of the Rover.
+					out.println("MOVE N");
 				}
 				
 				
