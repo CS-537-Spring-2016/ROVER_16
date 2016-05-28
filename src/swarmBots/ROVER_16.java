@@ -150,6 +150,11 @@ public class ROVER_16
 			Coord currentLoc = null;
 			Coord previousLoc = null;
 	
+			int northMove = 1;
+			int eastMove = 31;
+			int southMove = 5;
+			int nextEastMove = 16;
+			int nextNorthMove = 6;
 
 			/**
 			 *  ####  Rover controller process loop  ####
@@ -196,7 +201,24 @@ public class ROVER_16
 
 				// MOVING
 
-				Next_Move(currentLoc); // Prasanth Kannan
+				// Code for motion of the Rover.
+				if (northMove != 0) {
+					out.println("MOVE N");
+					northMove--;
+				} else if (eastMove != 0) {
+					out.println("MOVE E");
+					eastMove--;
+				} else if (southMove != 0) {
+					out.println("MOVE S");
+					southMove--;
+				}else if(nextEastMove!=0){
+					out.println("MOVE E");
+					nextEastMove--;
+				}else if(nextNorthMove!=0){
+					out.println("MOVE N");
+					nextNorthMove--;
+				}else
+					Next_Move(currentLoc); 
 				
 				/*
 				for(int i = 0; i< 10; i++)
