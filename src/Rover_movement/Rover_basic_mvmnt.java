@@ -150,6 +150,12 @@ public class Rover_basic_mvmnt
 			Coord currentLoc = null;
 			Coord previousLoc = null;
 	
+			int northMove = 1;
+			int eastMove = 31;
+			int southMove = 5;
+			int nextEastMove = 16;
+			int nextNorthMove = 3;
+			int nextEastMove1 = 16;
 
 			/**
 			 *  ####  Rover controller process loop  ####
@@ -179,6 +185,29 @@ public class Rover_basic_mvmnt
 				doScan();
 				scanMap.debugPrintMap();
 				
+				if (stuck) {
+					// Code for motion of the Rover.
+					if (northMove != 0) {
+						out.println("MOVE N");
+						northMove--;
+					} else if (eastMove != 0) {
+						out.println("MOVE E");
+						eastMove--;
+					} else if (southMove != 0) {
+						out.println("MOVE S");
+						southMove--;
+					}else if(nextEastMove!=0){
+						out.println("MOVE E");
+						nextEastMove--;
+					}else if(nextNorthMove!=0){
+						out.println("MOVE N");
+					}else if(nextEastMove1!=0){
+						out.println("MOVE E");
+						nextEastMove--;
+					}else 
+						Next_Move(currentLoc);
+				}
+
 				
 				// ***** get TIMER remaining *****
 				out.println("TIMER");
@@ -196,7 +225,7 @@ public class Rover_basic_mvmnt
 
 				// MOVING
 
-				Next_Move(currentLoc); // Prasanth Kannan
+				 // Prasanth Kannan
 				
 				/*
 				for(int i = 0; i< 10; i++)
