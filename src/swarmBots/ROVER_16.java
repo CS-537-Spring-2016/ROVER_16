@@ -29,8 +29,10 @@ import common.MapTile;
 import common.ScanMap;
 import enums.RoverDriveType;
 import enums.RoverToolType;
+import enums.Science;
 import enums.Terrain;
 import supportTools.AStar;
+import supportTools.CommunicationSupport;
 
 /**
  * The seed that this program is built on is a chat program example found here:
@@ -46,7 +48,8 @@ public class ROVER_16 {
 	ScanMap scanMap;
 	public static Map<Coord, MapTile> globalMap;
 	int sleepTime = 1200;
-	String SERVER_ADDRESS = "192.168.1.106";
+	//String SERVER_ADDRESS = "192.168.1.106";
+	String SERVER_ADDRESS = "localhost";
 	String commIP = "192.168.1.104";
 	List<Coord> destinations;
 	static final int PORT_ADDRESS = 9537;
@@ -203,7 +206,7 @@ public class ROVER_16 {
 				}
 				
 				if (trafficCounter % 10 == 0) {
-	                //updateglobalMap(com.getGlobalMap());
+	                updateglobalMap(com.getGlobalMap());
 
 	                // ********* get closest destination from current location everytime
 	                if (!destinations.isEmpty()) {
@@ -394,6 +397,34 @@ public class ROVER_16 {
 
 		return returnList;
 	}
+	
+	// get data from server and update field map
+    private void updateglobalMap(JSONArray data) {
+
+        for (Object o : data) {
+
+            JSONObject jsonObj = (JSONObject) o;
+            boolean marked = (jsonObj.get("g") != null) ? true : false;
+            int x = (int) (long) jsonObj.get("x");
+            int y = (int) (long) jsonObj.get("y");
+            Coord coord = new Coord(x, y);
+
+            // only bother to save if our globalMap doesn't contain the coordinate
+            if (!globalMap.containsKey(coord)) {
+                MapTile tile = CommunicationSupport.convertToMapTile(jsonObj);
+
+                // if tile has science AND is not in sand
+                if (tile.getScience() != Science.NONE && tile.getTerrain() != Terrain.SAND) {
+
+                    // then add to the destination
+                    if (!destinations.contains(coord) && !marked)
+                        destinations.add(coord);
+                }
+
+                globalMap.put(coord, tile);
+            }
+        }
+    }
 
 	// sends a SCAN request to the server and puts the result in the scanMap
 	// array
