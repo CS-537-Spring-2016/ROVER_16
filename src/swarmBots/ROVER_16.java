@@ -46,8 +46,8 @@ public class ROVER_16 {
 	ScanMap scanMap;
 	public static Map<Coord, MapTile> globalMap;
 	int sleepTime = 1200;
-	String SERVER_ADDRESS = "localhost";
-	String commIP = "23.251.155.186";
+	String SERVER_ADDRESS = "192.168.1.106";
+	String commIP = "192.168.1.104";
 	List<Coord> destinations;
 	static final int PORT_ADDRESS = 9537;
 	long trafficCounter;
@@ -148,7 +148,7 @@ public class ROVER_16 {
 
 			// ******** communication server
 			String url = "http://" + commIP + ":3000/api";
-			String corp_secret = "0FSj7Pn23t";
+			String corp_secret = "gz5YhL70a2";
 			Communication com = new Communication(url, rovername, corp_secret);
 
 			String[] cardinals = new String[4];
@@ -187,6 +187,8 @@ public class ROVER_16 {
 				scanMap.debugPrintMap();
 				MapTile[][] scanMapTiles = scanMap.getScanMap();
 				updateglobalMap(currentLoc, scanMapTiles);
+				
+				com.postScanMapTiles(currentLoc, scanMapTiles);
 				
 				// ***** get TIMER remaining *****
 				out.println("TIMER");
