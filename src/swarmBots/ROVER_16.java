@@ -48,8 +48,8 @@ public class ROVER_16 {
 	ScanMap scanMap;
 	public static Map<Coord, MapTile> globalMap;
 	int sleepTime = 1200;
-	//String SERVER_ADDRESS = "192.168.1.106";
-	String SERVER_ADDRESS = "localhost";
+	String SERVER_ADDRESS = "192.168.1.106";
+	//String SERVER_ADDRESS = "localhost";
 	String commIP = "192.168.1.104";
 	List<Coord> destinations;
 	static final int PORT_ADDRESS = 9537;
